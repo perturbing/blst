@@ -1809,8 +1809,7 @@ macro_rules! pippenger_mult_impl {
                     panic!("scalars length mismatch");
                 }
 
-                let p: [*const $point_affine; 2] =
-                    [&self.points[0], ptr::null()];
+                let p: [*const $point_affine; 2] = [&self.points[0], ptr::null()];
                 let s: [*const u8; 2] = [&scalars[0], ptr::null()];
 
                 unsafe {
@@ -1818,6 +1817,19 @@ macro_rules! pippenger_mult_impl {
                         Vec::with_capacity($scratch_sizeof(npoints) / 8);
                     scratch.set_len(scratch.capacity());
                     let mut ret = <$point>::default();
+
+                    println!(
+                        "Logging memory sizes:\n\
+                        ret size: {} bytes\n\
+                        p[0] size: {} bytes\n\
+                        s[0] size: {} bytes\n\
+                        scratch size: {} bytes",
+                        std::mem::size_of_val(&ret),
+                        std::mem::size_of_val(&p[0]),
+                        std::mem::size_of_val(&s[0]),
+                        scratch.len() * std::mem::size_of::<u64>()
+                    );
+                    
                     $multi_scalar_mult(
                         &mut ret,
                         &p[0],
