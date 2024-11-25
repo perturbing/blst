@@ -1822,10 +1822,12 @@ macro_rules! pippenger_mult_impl {
                         "Logging memory sizes:\n\
                         ret size: {} bytes\n\
                         p[0] size: {} bytes\n\
+                        npoint: {}\n\
                         s[0] size: {} bytes\n\
                         scratch size: {} bytes",
                         std::mem::size_of_val(&ret),
                         std::mem::size_of_val(&p[0]),
+                        npoints,
                         std::mem::size_of_val(&s[0]),
                         scratch.len() * std::mem::size_of::<u64>()
                     );
